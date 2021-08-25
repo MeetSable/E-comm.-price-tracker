@@ -3,26 +3,18 @@ from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate
 from .models import  Product, User
-from background_task import background
 #---------------------------------------------
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from lxml import html   
 
 #---------------------------------------------
-@background(schedule = 10)
 def get_price(product_id):
     p = Product.objects.get(pk = product_id)
     s = BeautifulSoup(urlopen(link), features="lxml")
     title = p.site_title
     if title == "Amazon":
-        try:
-            Price = s.find()
-        except:
-            try:
-                Price =
-            except:
-                Price = 
+        Price = s.find()
         temp = ""
         for i in Price:
             if i.isdigit() or i == ".":
